@@ -295,7 +295,7 @@ def _resnet(
     if weights is not None:
         _ovewrite_named_param(kwargs, "num_classes", len(weights.meta["categories"]))
 
-    model = ResNet(block, layers, **kwargs, k)
+    model = ResNet(block, layers, k, **kwargs)
 
     if weights is not None:
         model.load_state_dict(weights.get_state_dict(progress=progress))
@@ -557,7 +557,7 @@ class Wide_ResNet101_2_Weights(WeightsEnum):
 
 
 @handle_legacy_interface(weights=("pretrained", ResNet18_Weights.IMAGENET1K_V1))
-def resnet18(*, weights: Optional[ResNet18_Weights] = None, progress: bool = True,k = 64, **kwargs: Any) -> ResNet:
+def resnet18(*, weights: Optional[ResNet18_Weights] = None, progress: bool = True,k: int = 64, **kwargs: Any) -> ResNet:
     """ResNet-18 from `Deep Residual Learning for Image Recognition <https://arxiv.org/pdf/1512.03385.pdf>`__.
 
     Args:
@@ -566,7 +566,7 @@ def resnet18(*, weights: Optional[ResNet18_Weights] = None, progress: bool = Tru
             :class:`~torchvision.models.ResNet18_Weights` below for
             more details, and possible values. By default, no pre-trained
             weights are used.
-        progress (bool, optional): If True, displays a progress bar of the
+        progress (bool, optional): If True, displays a bar of the
             download to stderr. Default is True.
         **kwargs: parameters passed to the ``torchvision.models.resnet.ResNet``
             base class. Please refer to the `source code
@@ -578,7 +578,7 @@ def resnet18(*, weights: Optional[ResNet18_Weights] = None, progress: bool = Tru
     """
     weights = ResNet18_Weights.verify(weights)
 
-    return _resnet(BasicBlock, [2, 2, 2, 2], weights, progress, **kwargs)
+    return _resnet(BasicBlock, [2, 2, 2, 2], weights, progress, k, **kwargs)
 
 
 @handle_legacy_interface(weights=("pretrained", ResNet34_Weights.IMAGENET1K_V1))

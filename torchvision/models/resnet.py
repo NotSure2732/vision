@@ -289,12 +289,13 @@ def _resnet(
     layers: List[int],
     weights: Optional[WeightsEnum],
     progress: bool,
+    k: int,
     **kwargs: Any,
 ) -> ResNet:
     if weights is not None:
         _ovewrite_named_param(kwargs, "num_classes", len(weights.meta["categories"]))
 
-    model = ResNet(block, layers, **kwargs)
+    model = ResNet(block, layers, **kwargs, k)
 
     if weights is not None:
         model.load_state_dict(weights.get_state_dict(progress=progress))
